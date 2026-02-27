@@ -1,0 +1,9 @@
+{
+  "platforms": ["apple", "android"],
+  "apple": {
+    "modules": ["ExpoKLineChartModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.klinechart.ExpoKLineChartModule"]
+  }
+}
