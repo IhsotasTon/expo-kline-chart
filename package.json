@@ -1,6 +1,6 @@
 {
     "name": "expo-kline-chart",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "description": "K-line chart component for Expo/React Native",
     "main": "src/index.ts",
     "types": "src/index.ts",
