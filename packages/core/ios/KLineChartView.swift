@@ -94,6 +94,10 @@ class KLineChartView: ExpoView {
     let onCrosshairDismiss = EventDispatcher()
     let onVisibleRangeChange = EventDispatcher()
     let onContentHeightChange = EventDispatcher()
+    let onFullscreenPress = EventDispatcher()
+
+    // Fullscreen button tap detection
+    var fullscreenButtonRect: CGRect = .zero
 
     var lastReportedContentHeight: CGFloat = -1
 

@@ -105,4 +105,6 @@ export interface KLineChartProps extends ViewProps {
   onVisibleRangeChange?: (event: { nativeEvent: VisibleRangeEvent }) => void;
   /** Called when chart content height changes (native intrinsic height). */
   onContentHeightChange?: (event: { nativeEvent: ContentHeightEvent }) => void;
+  /** Called when fullscreen button is pressed */
+  onFullscreenPress?: () => void;
 }

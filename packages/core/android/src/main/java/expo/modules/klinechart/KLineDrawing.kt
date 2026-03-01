@@ -40,6 +40,7 @@ internal fun KLineChartView.drawChart(canvas: Canvas) {
     }
 
     drawIndicatorLegend(canvas)
+    drawFullscreenButton(canvas)
 
     canvas.restore()
 }

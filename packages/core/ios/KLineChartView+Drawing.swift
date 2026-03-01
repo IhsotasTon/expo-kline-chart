@@ -36,6 +36,7 @@ extension KLineChartView {
         }
 
         drawIndicatorLegend(context: context)
+        drawFullscreenButton(context: context)
     }
 
     // MARK: - Grid

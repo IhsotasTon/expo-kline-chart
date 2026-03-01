@@ -381,3 +381,73 @@ internal fun KLineChartView.drawLegendItem(canvas: Canvas, x: Float, y: Float, l
     canvas.drawText(text, x, y, textPaint)
     return x + textPaint.measureText(text) + 8 * dp
 }
+
+// MARK: - Fullscreen Button
+
+internal fun KLineChartView.drawFullscreenButton(canvas: Canvas) {
+    val buttonSize = 28f * dp
+    val margin = 8f * dp
+    val bottomY = mainChartHeight + totalSubChartsHeight
+    val x = margin
+    val y = bottomY - buttonSize - margin
+
+    val buttonRect = RectF(x, y, x + buttonSize, y + buttonSize)
+    fullscreenButtonRect.set(buttonRect)
+
+    // Background
+    fillPaint.color = config.backgroundColor
+    fillPaint.alpha = (0.8f * 255).toInt()
+    canvas.drawRoundRect(buttonRect, 4 * dp, 4 * dp, fillPaint)
+    fillPaint.alpha = 255
+
+    // Border
+    strokePaint.color = config.gridColor
+    strokePaint.strokeWidth = 0.5f * dp
+    strokePaint.style = Paint.Style.STROKE
+    canvas.drawRoundRect(buttonRect, 4 * dp, 4 * dp, strokePaint)
+
+    // Fullscreen icon (four corner arrows)
+    strokePaint.color = config.textColor
+    strokePaint.strokeWidth = 1.5f * dp
+    strokePaint.strokeCap = Paint.Cap.ROUND
+    strokePaint.strokeJoin = Paint.Join.ROUND
+
+    val inset = 7f * dp
+    val arrowLen = 5f * dp
+    val left = buttonRect.left + inset
+    val right = buttonRect.right - inset
+    val top = buttonRect.top + inset
+    val bottom = buttonRect.bottom - inset
+
+    val path = Path()
+
+    // Top-left corner arrow
+    path.moveTo(left + arrowLen, top)
+    path.lineTo(left, top)
+    path.lineTo(left, top + arrowLen)
+    canvas.drawPath(path, strokePaint)
+    path.reset()
+
+    // Top-right corner arrow
+    path.moveTo(right - arrowLen, top)
+    path.lineTo(right, top)
+    path.lineTo(right, top + arrowLen)
+    canvas.drawPath(path, strokePaint)
+    path.reset()
+
+    // Bottom-left corner arrow
+    path.moveTo(left, bottom - arrowLen)
+    path.lineTo(left, bottom)
+    path.lineTo(left + arrowLen, bottom)
+    canvas.drawPath(path, strokePaint)
+    path.reset()
+
+    // Bottom-right corner arrow
+    path.moveTo(right, bottom - arrowLen)
+    path.lineTo(right, bottom)
+    path.lineTo(right - arrowLen, bottom)
+    canvas.drawPath(path, strokePaint)
+
+    strokePaint.strokeCap = Paint.Cap.BUTT
+    strokePaint.strokeJoin = Paint.Join.MITER
+}

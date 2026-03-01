@@ -67,6 +67,7 @@ export default function ExpoKLineChart({
     onCrosshairChange,
     onCrosshairDismiss,
     onVisibleRangeChange,
+    onFullscreenPress,
     ...viewProps
 }: KLineChartProps) {
     const effectiveSubIndicators = React.useMemo(
@@ -184,6 +185,7 @@ export default function ExpoKLineChart({
             onCrosshairChange={onCrosshairChange}
             onCrosshairDismiss={onCrosshairDismiss}
             onVisibleRangeChange={onVisibleRangeChange}
+            onFullscreenPress={onFullscreenPress}
             onLayout={handleLayout}
             onContentHeightChange={handleContentHeightChange}
         />

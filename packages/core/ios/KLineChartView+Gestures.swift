@@ -23,6 +23,10 @@ extension KLineChartView {
 
     @objc func handleTap(_ gesture: UITapGestureRecognizer) {
         let point = gesture.location(in: self)
+        if fullscreenButtonRect.contains(point) {
+            onFullscreenPress([:])
+            return
+        }
         if crosshairIndex >= 0 {
             crosshairIndex = -1
             onCrosshairDismiss()

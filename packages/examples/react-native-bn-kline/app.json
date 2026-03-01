@@ -3,7 +3,7 @@
     "name": "react-native-bn-kline",
     "slug": "react-native-bn-kline",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/images/icon.png",
     "scheme": "reactnativebnkline",
     "userInterfaceStyle": "automatic",

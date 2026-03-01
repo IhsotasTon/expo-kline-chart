@@ -50,7 +50,7 @@ public class ExpoKLineChartModule: Module {
                 view.setLocale(value ?? "en")
             }
 
-            Events("onCrosshairChange", "onCrosshairDismiss", "onVisibleRangeChange", "onContentHeightChange")
+            Events("onCrosshairChange", "onCrosshairDismiss", "onVisibleRangeChange", "onContentHeightChange", "onFullscreenPress")
         }
     }
 }

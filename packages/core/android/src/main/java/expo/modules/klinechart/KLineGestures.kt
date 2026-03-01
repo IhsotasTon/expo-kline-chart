@@ -219,6 +219,10 @@ internal fun KLineChartView.handleTouchEvent(event: MotionEvent): Boolean {
 // ---- Tap ----
 
 private fun KLineChartView.handleTap(x: Float, y: Float) {
+    if (fullscreenButtonRect.contains(x, y)) {
+        onFullscreenPress(emptyMap())
+        return
+    }
     if (crosshairIndex >= 0) {
         crosshairIndex = -1
         onCrosshairDismiss(emptyMap())

@@ -5,6 +5,7 @@ import { formatPrice } from "@/utils/calculations";
 import { Ionicons } from "@expo/vector-icons";
 import type { MainIndicatorType, SubIndicatorType } from "@expo-kline-chart/core";
 import { KLineChart } from "@expo-kline-chart/core";
+import * as ScreenOrientation from "expo-screen-orientation";
 import React, {
     useCallback,
     useEffect,
@@ -13,6 +14,7 @@ import React, {
     useState,
 } from "react";
 import {
+    Dimensions,
     Platform,
     ScrollView,
     StatusBar,
@@ -111,6 +113,7 @@ export default function HomeScreen() {
         "VOL",
         "MACD",
     ]);
+    const [isFullscreen, setIsFullscreen] = useState(false);
 
     const { colors, isDarkMode, toggleTheme } = useKLineTheme();
     const ticker = useTickerData(SYMBOL);
@@ -126,6 +129,20 @@ export default function HomeScreen() {
             }
             return [...prev, type];
         });
+    }, []);
+
+    const handleFullscreenPress = useCallback(async () => {
+        await ScreenOrientation.lockAsync(
+            ScreenOrientation.OrientationLock.LANDSCAPE
+        );
+        setIsFullscreen(true);
+    }, []);
+
+    const handleCloseFullscreen = useCallback(async () => {
+        await ScreenOrientation.lockAsync(
+            ScreenOrientation.OrientationLock.PORTRAIT_UP
+        );
+        setIsFullscreen(false);
     }, []);
 
     const isPositive = ticker ? ticker.change >= 0 : true;
@@ -280,6 +297,7 @@ export default function HomeScreen() {
                     mainIndicator={mainIndicator}
                     subIndicators={subIndicators}
                     timeFrame={selectedTimeFrame}
+                    onFullscreenPress={handleFullscreenPress}
                 />
 
                 {/* Bottom indicator bar */}
@@ -329,6 +347,38 @@ export default function HomeScreen() {
                     </ScrollView>
                 </View>
             </ScrollView>
+
+            {/* Fullscreen Overlay */}
+            {isFullscreen && (
+                <View style={[styles.fullscreenOverlay, { backgroundColor: colors.bg }]}>
+                    <StatusBar hidden />
+                    <TouchableOpacity
+                        onPress={handleCloseFullscreen}
+                        style={[styles.closeButton, { backgroundColor: colors.bg }]}
+                    >
+                        <Ionicons name="close" size={24} color={colors.text} />
+                    </TouchableOpacity>
+
+                    <KLineChart
+                        restBaseURL={REST_BASE_URL}
+                        wsBaseURL={WS_BASE_URL}
+                        symbol={SYMBOL}
+                        config={{
+                            backgroundColor: colors.bg,
+                            upColor: colors.green,
+                            downColor: colors.red,
+                            gridColor: colors.gridColor,
+                            textColor: colors.subText,
+                            crosshairColor: colors.dimText,
+                            maColors: ["#F0B90B", "#6149CD", "#2196F3"],
+                            isDarkMode,
+                        }}
+                        mainIndicator={mainIndicator}
+                        subIndicators={subIndicators}
+                        timeFrame={selectedTimeFrame}
+                    />
+                </View>
+            )}
         </SafeAreaView>
     );
 }
@@ -373,5 +423,21 @@ const styles = StyleSheet.create({
     indicatorTab: {
         paddingHorizontal: 12,
         paddingVertical: 4,
+    },
+    closeButton: {
+        position: "absolute",
+        top: 16,
+        right: 16,
+        zIndex: 10,
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        alignItems: "center",
+        justifyContent: "center",
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        elevation: 5,
     },
 });

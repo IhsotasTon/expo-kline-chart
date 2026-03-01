@@ -116,6 +116,10 @@ class KLineChartView(context: Context, appContext: AppContext) : ExpoView(contex
     internal val onCrosshairDismiss by EventDispatcher()
     internal val onVisibleRangeChange by EventDispatcher()
     internal val onContentHeightChange by EventDispatcher()
+    internal val onFullscreenPress by EventDispatcher()
+
+    // Fullscreen button tap detection
+    internal var fullscreenButtonRect: RectF = RectF()
 
     internal var lastReportedContentHeight: Float = -1f
 

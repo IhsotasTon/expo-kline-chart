@@ -455,4 +455,72 @@ extension KLineChartView {
         str.draw(at: CGPoint(x: x, y: y), withAttributes: itemAttrs)
         x += size.width + 8
     }
+
+    // MARK: - Fullscreen Button
+
+    func drawFullscreenButton(context: CGContext) {
+        let buttonSize: CGFloat = 28
+        let margin: CGFloat = 8
+        let bottomY = mainChartHeight + totalSubChartsHeight
+        let x = margin
+        let y = bottomY - buttonSize - margin
+
+        let buttonRect = CGRect(x: x, y: y, width: buttonSize, height: buttonSize)
+        fullscreenButtonRect = buttonRect
+
+        // Background
+        context.saveGState()
+        context.setFillColor(config.backgroundColor.withAlphaComponent(0.8).cgColor)
+        let path = UIBezierPath(roundedRect: buttonRect, cornerRadius: 4)
+        context.addPath(path.cgPath)
+        context.fillPath()
+
+        // Border
+        context.setStrokeColor(config.gridColor.cgColor)
+        context.setLineWidth(0.5)
+        context.addPath(path.cgPath)
+        context.strokePath()
+
+        // Fullscreen icon (four corner arrows)
+        let iconColor = config.textColor
+        context.setStrokeColor(iconColor.cgColor)
+        context.setLineWidth(1.5)
+        context.setLineCap(.round)
+        context.setLineJoin(.round)
+
+        let inset: CGFloat = 7
+        let arrowLen: CGFloat = 5
+        let left = buttonRect.minX + inset
+        let right = buttonRect.maxX - inset
+        let top = buttonRect.minY + inset
+        let bottom = buttonRect.maxY - inset
+
+        // Top-left corner arrow
+        context.move(to: CGPoint(x: left + arrowLen, y: top))
+        context.addLine(to: CGPoint(x: left, y: top))
+        context.addLine(to: CGPoint(x: left, y: top + arrowLen))
+        context.strokePath()
+
+        // Top-right corner arrow
+        context.move(to: CGPoint(x: right - arrowLen, y: top))
+        context.addLine(to: CGPoint(x: right, y: top))
+        context.addLine(to: CGPoint(x: right, y: top + arrowLen))
+        context.strokePath()
+
+        // Bottom-left corner arrow
+        context.move(to: CGPoint(x: left, y: bottom - arrowLen))
+        context.addLine(to: CGPoint(x: left, y: bottom))
+        context.addLine(to: CGPoint(x: left + arrowLen, y: bottom))
+        context.strokePath()
+
+        // Bottom-right corner arrow
+        context.move(to: CGPoint(x: right, y: bottom - arrowLen))
+        context.addLine(to: CGPoint(x: right, y: bottom))
+        context.addLine(to: CGPoint(x: right - arrowLen, y: bottom))
+        context.strokePath()
+
+        context.setLineCap(.butt)
+        context.setLineJoin(.miter)
+        context.restoreGState()
+    }
 }
