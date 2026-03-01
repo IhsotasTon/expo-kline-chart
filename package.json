@@ -6,6 +6,9 @@
     "types": "src/index.ts",
     "repository": "https://github.com/IhsotasTon/expo-kline-chart",
     "license": "MIT",
+    "workspaces": [
+        "examples/*"
+    ],
     "files": [
         "src",
         "ios",
