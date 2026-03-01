@@ -11,9 +11,12 @@
         "ios": "turbo run ios",
         "android": "turbo run android",
         "lint": "turbo run lint",
-        "publish": "turbo run publish"
+        "changeset": "changeset",
+        "version": "changeset version",
+        "release": "changeset publish"
     },
     "devDependencies": {
+        "@changesets/cli": "^2.29.8",
         "turbo": "^2.8.12"
     }
 }
