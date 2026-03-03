@@ -1,0 +1,43 @@
+{
+  "name": "expo-kline-chart",
+  "version": "0.1.4",
+  "description": "K-line chart component for Expo/React Native",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "repository": "https://github.com/IhsotasTon/expo-kline-chart",
+  "license": "MIT",
+  "author": "IhsotasTon",
+  "scripts": {
+    "publish": "npm publish"
+  },
+  "files": [
+    "src",
+    "ios",
+    "android",
+    "expo-module.config.json"
+  ],
+  "engines": {
+    "node": ">=18",
+    "npm": ">=9"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  },
+  "keywords": [
+    "expo",
+    "react-native",
+    "kline",
+    "k-line",
+    "candlestick",
+    "chart",
+    "trading",
+    "stock",
+    "crypto",
+    "technical-analysis"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}
