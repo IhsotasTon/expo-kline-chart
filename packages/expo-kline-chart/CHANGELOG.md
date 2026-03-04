@@ -1,5 +1,11 @@
 # expo-kline-chart
 
+## 0.1.6
+
+### Patch Changes
+
+- cbcff54: chore: update package.json to include repository, bugs, and homepage fields for expo-kline-chart
+
 ## 0.1.5
 
 ### Patch Changes
