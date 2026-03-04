@@ -4,7 +4,14 @@
   "description": "K-line chart component for Expo/React Native",
   "main": "src/index.ts",
   "types": "src/index.ts",
-  "repository": "https://github.com/IhsotasTon/expo-kline-chart",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IhsotasTon/expo-kline-chart.git"
+  },
+  "bugs": {
+    "url": "https://github.com/IhsotasTon/expo-kline-chart/issues"
+  },
+  "homepage": "https://github.com/IhsotasTon/expo-kline-chart#readme",
   "license": "MIT",
   "author": "IhsotasTon",
   "scripts": {
