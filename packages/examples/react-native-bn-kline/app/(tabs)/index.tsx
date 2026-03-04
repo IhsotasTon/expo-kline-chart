@@ -3,8 +3,8 @@ import { useKLineTheme } from "@/contexts/KLineThemeContext";
 import type { TimeFrame } from "@/types/kline";
 import { formatPrice } from "@/utils/calculations";
 import { Ionicons } from "@expo/vector-icons";
-import type { MainIndicatorType, SubIndicatorType } from "@expo-kline-chart/core";
-import { KLineChart } from "@expo-kline-chart/core";
+import type { MainIndicatorType, SubIndicatorType } from "expo-kline-chart";
+import { KLineChart } from "expo-kline-chart";
 import * as ScreenOrientation from "expo-screen-orientation";
 import React, {
     useCallback,
@@ -133,14 +133,14 @@ export default function HomeScreen() {
 
     const handleFullscreenPress = useCallback(async () => {
         await ScreenOrientation.lockAsync(
-            ScreenOrientation.OrientationLock.LANDSCAPE
+            ScreenOrientation.OrientationLock.LANDSCAPE,
         );
         setIsFullscreen(true);
     }, []);
 
     const handleCloseFullscreen = useCallback(async () => {
         await ScreenOrientation.lockAsync(
-            ScreenOrientation.OrientationLock.PORTRAIT_UP
+            ScreenOrientation.OrientationLock.PORTRAIT_UP,
         );
         setIsFullscreen(false);
     }, []);
@@ -350,11 +350,19 @@ export default function HomeScreen() {
 
             {/* Fullscreen Overlay */}
             {isFullscreen && (
-                <View style={[styles.fullscreenOverlay, { backgroundColor: colors.bg }]}>
+                <View
+                    style={[
+                        styles.fullscreenOverlay,
+                        { backgroundColor: colors.bg },
+                    ]}
+                >
                     <StatusBar hidden />
                     <TouchableOpacity
                         onPress={handleCloseFullscreen}
-                        style={[styles.closeButton, { backgroundColor: colors.bg }]}
+                        style={[
+                            styles.closeButton,
+                            { backgroundColor: colors.bg },
+                        ]}
                     >
                         <Ionicons name="close" size={24} color={colors.text} />
                     </TouchableOpacity>

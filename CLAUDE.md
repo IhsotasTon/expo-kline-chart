@@ -4,14 +4,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-A high-performance native K-line (candlestick) chart component for React Native/Expo, published as `@expo-kline-chart/core`. Chart rendering is implemented natively in Swift (iOS) and Kotlin (Android) via the Expo Modules API — React handles props/state, native code handles all drawing and gestures.
+A high-performance native K-line (candlestick) chart component for React Native/Expo, published as `expo-kline-chart`. Chart rendering is implemented natively in Swift (iOS) and Kotlin (Android) via the Expo Modules API — React handles props/state, native code handles all drawing and gestures.
 
 ## Monorepo Structure
 
 Bun workspaces + Turborepo monorepo:
 
-- `packages/core/` — The published npm package (`@expo-kline-chart/core`). Contains the React wrapper (`src/`), native iOS code (`ios/`), and native Android code (`android/`). Registered as an Expo native module via `expo-module.config.json`.
-- `packages/examples/react-native-bn-kline/` — Expo Router example app demonstrating the chart with live Binance data. Uses `@expo-kline-chart/core` as a `workspace:*` dependency.
+-   `packages/core/` — The published npm package (`expo-kline-chart`). Contains the React wrapper (`src/`), native iOS code (`ios/`), and native Android code (`android/`). Registered as an Expo native module via `expo-module.config.json`.
+-   `packages/examples/react-native-bn-kline/` — Expo Router example app demonstrating the chart with live Binance data. Uses `expo-kline-chart` as a `workspace:*` dependency.
 
 ## Commands
 
@@ -45,8 +45,9 @@ No test suite is configured.
 ### Native Module Layout
 
 The Expo module is defined in `packages/core/expo-module.config.json`. Native entry points:
-- iOS: `ExpoKLineChartModule.swift` → `KLineChartView.swift` + extensions (`+Axis`, `+DataSource`, `+Drawing`, `+Gestures`, `+Indicators`, `+Layout`, `+MainIndicator`, `+Overlay`, `+SubCharts`)
-- Android: `ExpoKLineChartModule.kt` → `KLineChartView.kt` + separate files (`KLineAxis.kt`, `KLineDataSource.kt`, `KLineDrawing.kt`, `KLineGestures.kt`, `KLineIndicators.kt`, `KLineLayout.kt`, `KLineMainIndicator.kt`, `KLineOverlay.kt`, `KLineSubCharts.kt`)
+
+-   iOS: `ExpoKLineChartModule.swift` → `KLineChartView.swift` + extensions (`+Axis`, `+DataSource`, `+Drawing`, `+Gestures`, `+Indicators`, `+Layout`, `+MainIndicator`, `+Overlay`, `+SubCharts`)
+-   Android: `ExpoKLineChartModule.kt` → `KLineChartView.kt` + separate files (`KLineAxis.kt`, `KLineDataSource.kt`, `KLineDrawing.kt`, `KLineGestures.kt`, `KLineIndicators.kt`, `KLineLayout.kt`, `KLineMainIndicator.kt`, `KLineOverlay.kt`, `KLineSubCharts.kt`)
 
 Both platforms independently compute all technical indicators (MA, EMA, BOLL, SAR, AVL, SUPER, MACD, RSI, KDJ, OBV, WR, StochRSI) and handle gesture recognition (pan, pinch, long-press crosshair).
 
@@ -57,12 +58,13 @@ Any change to chart rendering, indicators, or gesture handling must be applied t
 ### Example App
 
 The example app (`packages/examples/react-native-bn-kline/`) is an Expo Router app:
-- `app/(tabs)/index.tsx` — Main screen with price header, timeframe selector, chart, and indicator bar
-- `contexts/KLineThemeContext.tsx` — Dark/light theme provider
-- `components/kline/TimeFrameSelector.tsx` — Timeframe picker
-- `types/kline.ts` — App-level type definitions (e.g., `TimeFrame`)
-- Path alias: `@/*` maps to the example app root via `tsconfig.json`
+
+-   `app/(tabs)/index.tsx` — Main screen with price header, timeframe selector, chart, and indicator bar
+-   `contexts/KLineThemeContext.tsx` — Dark/light theme provider
+-   `components/kline/TimeFrameSelector.tsx` — Timeframe picker
+-   `types/kline.ts` — App-level type definitions (e.g., `TimeFrame`)
+-   Path alias: `@/*` maps to the example app root via `tsconfig.json`
 
 ## Changesets
 
-Uses `@changesets/cli` for versioning. The example app (`react-native-bn-kline`) is ignored in changeset config. Only `@expo-kline-chart/core` gets published.
+Uses `@changesets/cli` for versioning. The example app (`react-native-bn-kline`) is ignored in changeset config. Only `expo-kline-chart` gets published.
