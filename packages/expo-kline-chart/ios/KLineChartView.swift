@@ -129,6 +129,21 @@ class KLineChartView: ExpoView {
         chartLayer.chartView = self
         addSubview(chartLayer)
         setupGestures()
+
+        // Reload chart data when app returns to foreground
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleAppWillEnterForeground),
+            name: UIApplication.willEnterForegroundNotification,
+            object: nil
+        )
+    }
+
+    @objc private func handleAppWillEnterForeground() {
+        // Only reload if we're using native API mode and have valid config
+        if !restBaseURL.isEmpty && !symbol.isEmpty {
+            reloadData()
+        }
     }
 
     override var intrinsicContentSize: CGSize {
@@ -359,5 +374,6 @@ class KLineChartView: ExpoView {
 
     deinit {
         disconnectWebSocket()
+        NotificationCenter.default.removeObserver(self)
     }
 }

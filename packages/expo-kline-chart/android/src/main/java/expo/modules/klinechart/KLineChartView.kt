@@ -5,6 +5,9 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
 import android.view.Choreographer
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.ProcessLifecycleOwner
 import expo.modules.kotlin.AppContext
 import expo.modules.kotlin.viewevent.EventDispatcher
 import expo.modules.kotlin.views.ExpoView
@@ -147,6 +150,16 @@ class KLineChartView(context: Context, appContext: AppContext) : ExpoView(contex
     // Localization
     internal var locale: String = "en"
 
+    // App lifecycle observer
+    private val lifecycleObserver = LifecycleEventObserver { _, event ->
+        if (event == Lifecycle.Event.ON_START) {
+            // App returned to foreground - reload chart if using native API mode
+            if (restBaseURL.isNotEmpty() && symbol.isNotEmpty()) {
+                reloadData()
+            }
+        }
+    }
+
     // Reusable paints
     internal val fillPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
     internal val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE }
@@ -167,6 +180,9 @@ class KLineChartView(context: Context, appContext: AppContext) : ExpoView(contex
         // Prevent drawing outside the bounds RN assigns to us
         setClipBounds(null)
         setupGestures()
+
+        // Reload chart data when app returns to foreground
+        ProcessLifecycleOwner.get().lifecycle.addObserver(lifecycleObserver)
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -422,6 +438,7 @@ class KLineChartView(context: Context, appContext: AppContext) : ExpoView(contex
         super.onDetachedFromWindow()
         disconnectWebSocket()
         stopAnimations()
+        ProcessLifecycleOwner.get().lifecycle.removeObserver(lifecycleObserver)
     }
 
     internal fun stopAnimations() {
